@@ -1,8 +1,9 @@
 //
 // Created by patri on 10/30/2025.
-//
+// used Raylib for image generation https://github.com/gameguild-gg/raylib-cpm-cmake-boilerplate
 #include "Noise.h"
 #include "FastNoiseLite.h"
+#include <cmath>
 using namespace std;
 
 int ourRound(float value, float divideLine);
@@ -52,4 +53,12 @@ int ourRound(float value, float divideLine) {
         return 0;
 }
 
-// use Raylib https://github.com/gameguild-gg/raylib-cpm-cmake-boilerplate
+vector<int> mapNoise(vector<float>inputVec)
+{
+    vector<int>outputVec(inputVec.size());
+    for (int i = 0;i < inputVec.size();i++)
+    {
+        outputVec[i] = int(round((inputVec[i]+1)*127.5));
+    }
+    return outputVec;
+}

@@ -20,9 +20,9 @@ int main()
     auto pixels = (Color*)img.data;
     Texture tex = LoadTextureFromImage(img);
 
-    vector<float> initVec = createNoise(imgWidth, imgHeight, 3241313);
+    vector<float> initVec = createNoise(imgWidth, imgHeight, 1334);
     vector<int> finalVec = divideNoise(initVec, 0.5);
-
+    vector<int> initImgVec = mapNoise(initVec);
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -32,9 +32,9 @@ int main()
             for(int col = 0; col < imgWidth; col++)
             {
                 pixels[row * imgWidth + col] = (Color) {
-                    (uint8_t)finalVec[row * imgWidth + col],
-                    (uint8_t)finalVec[row * imgWidth + col],
-                    (uint8_t)finalVec[row * imgWidth + col],
+                    (uint8_t)initImgVec[row * imgWidth + col],
+                    (uint8_t)initImgVec[row * imgWidth + col],
+                    (uint8_t)initImgVec[row * imgWidth + col],
                     255
                 };
             }

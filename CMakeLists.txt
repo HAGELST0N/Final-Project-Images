@@ -11,5 +11,6 @@ include_directories(${raygui_SOURCE_DIR}/src)
 #CPMAddPackage("gh:raysan5/rpng#1.0")
 
 add_executable(HelloRaylib main.cpp
-        Noise.cpp)
+        Noise.cpp
+        Noise.h)
 target_link_libraries(HelloRaylib PUBLIC raylib)

@@ -1,8 +1,8 @@
 //
 // Created by patri on 10/30/2025.
 //
+#include "Noise.h"
 #include "FastNoiseLite.h"
-#include <vector>
 using namespace std;
 
 int ourRound(float value, float divideLine);
@@ -38,7 +38,7 @@ vector<float> createNoise(const int x_size, const int y_size, const int seed){
 }
 
 vector<int> divideNoise(vector<float> inputVec, const float divideLine) {
-    vector<int> outputVec;
+    vector<int> outputVec(inputVec.size());
     for (int i = 0; i < inputVec.size(); i++) {
         outputVec[i] = ourRound(inputVec[i], divideLine);
     }

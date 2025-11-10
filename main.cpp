@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include <raygui.h>
 #include <cstdint>
-#include "Noise.cpp"
+#include "Noise.h"
 
 
 int main()
@@ -20,7 +20,7 @@ int main()
     auto pixels = (Color*)img.data;
     Texture tex = LoadTextureFromImage(img);
 
-    vector<float> initVec = createNoise(imgWidth, imgHeight, 1337);
+    vector<float> initVec = createNoise(imgWidth, imgHeight, 3241313);
     vector<int> finalVec = divideNoise(initVec, 0.5);
 
     // Main game loop
@@ -32,9 +32,9 @@ int main()
             for(int col = 0; col < imgWidth; col++)
             {
                 pixels[row * imgWidth + col] = (Color) {
-                    (uint8_t)finalVec[row * col + col],
-                    (uint8_t)finalVec[row * col + col],
-                    (uint8_t)finalVec[row * col + col],
+                    (uint8_t)finalVec[row * imgWidth + col],
+                    (uint8_t)finalVec[row * imgWidth + col],
+                    (uint8_t)finalVec[row * imgWidth + col],
                     255
                 };
             }

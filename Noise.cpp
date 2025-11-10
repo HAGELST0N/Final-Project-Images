@@ -1,4 +1,4 @@
-
+#pragma once
 
 //
 // Created by patri on 10/30/2025.
@@ -9,7 +9,7 @@
 using namespace std;
 
 int ourRound(float value, float divideLine);
-vector<float> divideNoise(vector<float> &inputVec, const float divideLine);
+vector<int> divideNoise(vector<float> inputVec, const float divideLine);
 
 // generates vector of floats from -1 to 1 representing noise
 // x_size, y_size: the size of the vector to generate
@@ -37,12 +37,15 @@ vector<float> createNoise(const int x_size, const int y_size, const int seed){
             noiseData[index++] = noise.GetNoise((float)x, (float)y);
         }
     }
+    return noiseData;
 }
 
-vector<float> divideNoise(vector<float> &inputVec, const float divideLine) {
+vector<int> divideNoise(vector<float> inputVec, const float divideLine) {
+    vector<int> outputVec;
     for (int i = 0; i < inputVec.size(); i++) {
-        inputVec[i] = ourRound(inputVec[i], divideLine);
+        outputVec[i] = ourRound(inputVec[i], divideLine);
     }
+    return outputVec;
 }
 
 int ourRound(float value, float divideLine) {

@@ -1,9 +1,6 @@
-#pragma once
-
 //
 // Created by patri on 10/30/2025.
 //
-
 #include "FastNoiseLite.h"
 #include <vector>
 using namespace std;

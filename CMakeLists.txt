@@ -12,5 +12,7 @@ include_directories(${raygui_SOURCE_DIR}/src)
 
 add_executable(HelloRaylib main.cpp
         Noise.cpp
-        Noise.h)
+        Noise.h
+        image.h
+        image.cpp)
 target_link_libraries(HelloRaylib PUBLIC raylib)

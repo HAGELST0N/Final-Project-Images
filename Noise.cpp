@@ -52,7 +52,7 @@ int ourRound(float value, float divideLine) {
     else
         return 0;
 }
-
+// Scales noise values from a float -1 to 1 into an integer 0-255
 vector<int> mapNoise(vector<float>inputVec)
 {
     vector<int>outputVec(inputVec.size());

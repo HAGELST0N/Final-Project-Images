@@ -2,7 +2,7 @@
 #include <raygui.h>
 #include <cstdint>
 #include "Noise.h"
-
+#include "image.h"
 
 int main()
 {
@@ -13,7 +13,7 @@ int main()
 
     InitWindow(screenWidth, screenHeight, "Pixel Manipulation");
 
-    SetTargetFPS(60);
+    SetTargetFPS(1);
 
     Image img = GenImageColor(imgHeight, imgHeight, WHITE);
     ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
@@ -26,19 +26,7 @@ int main()
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // your update logic goes here
-        for(int row = 0; row < imgHeight; row++)
-        {
-            for(int col = 0; col < imgWidth; col++)
-            {
-                pixels[row * imgWidth + col] = (Color) {
-                    (uint8_t)initImgVec[row * imgWidth + col],
-                    (uint8_t)initImgVec[row * imgWidth + col],
-                    (uint8_t)initImgVec[row * imgWidth + col],
-                    255
-                };
-            }
-        }
+        displayImg(imgWidth, imgHeight, initImgVec, pixels);
         UpdateTexture(tex, pixels);
 
         // drawing logic goes here

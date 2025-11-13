@@ -27,19 +27,6 @@ int main()
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         displayImg(imgWidth, imgHeight, initImgVec, pixels);
-        // your update logic goes here
-        // for(int row = 0; row < imgHeight; row++)
-        // {
-        //     for(int col = 0; col < imgWidth; col++)
-        //     {
-        //         pixels[row * imgWidth + col] = (Color) {
-        //             (uint8_t)initImgVec[row * imgWidth + col],
-        //             (uint8_t)initImgVec[row * imgWidth + col],
-        //             (uint8_t)initImgVec[row * imgWidth + col],
-        //             255
-        //         };
-        //     }
-        // }
         UpdateTexture(tex, pixels);
 
         // drawing logic goes here

@@ -22,7 +22,6 @@ vector<float> createNoise(const int x_size, const int y_size, const int seed){
     noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
     // modified to use seed parameter to set seed when called
     noise.SetSeed(seed);
-
     // Gather noise data
     // modified to use x_size and y_size
     vector<float> noiseData(x_size * y_size);
@@ -61,4 +60,11 @@ vector<int> mapNoise(vector<float>inputVec)
         outputVec[i] = int(round((inputVec[i]+1)*127.5));
     }
     return outputVec;
+}
+
+pair<int, int> getDirection(FastNoiseLite &noise, int x, int y) {
+    int degrees = noise.GetNoise(x, y) * 90;
+    x += cos(degrees);
+    y += sin(degrees);
+    return make_pair(x, y);
 }

@@ -1,4 +1,5 @@
 #include "image.h"
+#include "Noise.h"
 using namespace std;
 
 void displayImg(const int imgWidth, const int imgHeight, vector<int> inputImgVec, Color* pixels)
@@ -7,6 +8,7 @@ void displayImg(const int imgWidth, const int imgHeight, vector<int> inputImgVec
     {
         for(int col = 0; col < imgWidth; col++)
         {
+            Walk(noise, col, row);
             pixels[row * imgWidth + col] = (Color) {
                 (uint8_t)inputImgVec[row * imgWidth + col],
                 (uint8_t)inputImgVec[row * imgWidth + col],

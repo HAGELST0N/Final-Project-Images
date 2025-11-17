@@ -3,6 +3,7 @@
 #include <cstdint>
 #include "Noise.h"
 #include "image.h"
+#include "Worm.h"
 
 int main()
 {
@@ -20,13 +21,14 @@ int main()
     auto pixels = (Color*)img.data;
     Texture tex = LoadTextureFromImage(img);
 
+    Worm worm;
     vector<float> initVec = createNoise(imgWidth, imgHeight, 1334);
     vector<int> finalVec = divideNoise(initVec, 0.5);
     vector<int> initImgVec = mapNoise(initVec);
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        displayImg(imgWidth, imgHeight, initImgVec, pixels);
+        displayImg(worm, imgWidth, imgHeight, initImgVec, pixels);
         UpdateTexture(tex, pixels);
 
         // drawing logic goes here

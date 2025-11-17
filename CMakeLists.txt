@@ -14,5 +14,7 @@ add_executable(HelloRaylib main.cpp
         Noise.cpp
         Noise.h
         image.h
-        image.cpp)
+        image.cpp
+        Worm.cpp
+        Worm.h)
 target_link_libraries(HelloRaylib PUBLIC raylib)

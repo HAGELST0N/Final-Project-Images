@@ -58,15 +58,3 @@ vector<int> mapNoise(const vector<float> &inputVec)
     }
     return outputVec;
 }
-
-pair<float, float> getDirection(FastNoiseLite &noise, float x, float y) {
-    float degrees = noise.GetNoise(x, y);
-    x = cos(PI * degrees);
-    y = sin(PI * degrees);
-    return make_pair(x, y);
-}
-
-void Walk(FastNoiseLite &noise, vector<float> &inputVec, float x, float y) {
-    auto direction = getDirection(noise, x , y);
-    inputVec[(x + direction.first) * (y + direction.second)] = 1.0;
-}

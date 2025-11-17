@@ -2,12 +2,9 @@
 // Created by patri on 10/30/2025.
 // used Raylib for image generation https://github.com/gameguild-gg/raylib-cpm-cmake-boilerplate
 #include "Noise.h"
-#include "FastNoiseLite.h"
 #include <cmath>
+#include "raylib.h"
 using namespace std;
-
-int ourRound(float value, float divideLine);
-vector<int> divideNoise(vector<float> inputVec, const float divideLine);
 
 // generates vector of floats from -1 to 1 representing noise
 // x_size, y_size: the size of the vector to generate
@@ -22,7 +19,6 @@ vector<float> createNoise(const int x_size, const int y_size, const int seed){
     noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
     // modified to use seed parameter to set seed when called
     noise.SetSeed(seed);
-
     // Gather noise data
     // modified to use x_size and y_size
     vector<float> noiseData(x_size * y_size);
@@ -38,7 +34,7 @@ vector<float> createNoise(const int x_size, const int y_size, const int seed){
     return noiseData;
 }
 
-vector<int> divideNoise(vector<float> inputVec, const float divideLine) {
+vector<int> divideNoise(const vector<float> inputVec, const float divideLine) {
     vector<int> outputVec(inputVec.size());
     for (int i = 0; i < inputVec.size(); i++) {
         outputVec[i] = ourRound(inputVec[i], divideLine);
@@ -53,7 +49,7 @@ int ourRound(float value, float divideLine) {
         return 0;
 }
 // Scales noise values from a float -1 to 1 into an integer 0-255
-vector<int> mapNoise(vector<float>inputVec)
+vector<int> mapNoise(const vector<float> &inputVec)
 {
     vector<int>outputVec(inputVec.size());
     for (int i = 0;i < inputVec.size();i++)
@@ -61,4 +57,16 @@ vector<int> mapNoise(vector<float>inputVec)
         outputVec[i] = int(round((inputVec[i]+1)*127.5));
     }
     return outputVec;
+}
+
+pair<float, float> getDirection(FastNoiseLite &noise, float x, float y) {
+    float degrees = noise.GetNoise(x, y);
+    x = cos(PI * degrees);
+    y = sin(PI * degrees);
+    return make_pair(x, y);
+}
+
+void Walk(FastNoiseLite &noise, vector<float> &inputVec, float x, float y) {
+    auto direction = getDirection(noise, x , y);
+    inputVec[(x + direction.first) * (y + direction.second)] = 1.0;
 }

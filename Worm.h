@@ -5,6 +5,8 @@
 #ifndef WORM_H
 #define WORM_H
 
+#include <list>
+
 #include "FastNoiseLite.h"
 #include <vector>
 
@@ -15,9 +17,9 @@ public:
     void Walk();
 private:
     FastNoiseLite noise;
-    float h_xPos, h_yPos, speed, length;
-    std::vector<float, float> positions;
-    int segCount;
+    float h_xPos, h_yPos, speed = 10.0, length = 10.0;
+    std::list<std::pair<float, float>> positions;
+    int maxSegCount = 5;
 };
 
 

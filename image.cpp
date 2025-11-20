@@ -8,7 +8,6 @@ void displayImg(Worm worm, const int imgWidth, const int imgHeight, vector<int> 
     {
         for(int col = 0; col < imgWidth; col++)
         {
-            worm.Walk();
             pixels[row * imgWidth + col] = (Color) {
                 (uint8_t)inputImgVec[row * imgWidth + col],
                 (uint8_t)inputImgVec[row * imgWidth + col],

@@ -3,11 +3,15 @@
 //
 
 #include "Worm.h"
+#include <iostream>
 #include <cmath>
+#include <ctime>
+#include <random>
 
 Worm::Worm() {
+    srand(time(0));
     noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
-    //noise.SetSeed(seed);
+    noise.SetSeed(rand());
 }
 
 std::pair<float, float> Worm::getDirection(float x, float y) {
@@ -19,10 +23,19 @@ std::pair<float, float> Worm::getDirection(float x, float y) {
 
 void Worm::Walk()
 {
-    auto direction = getDirection(h_xPos, h_yPos);
-    float new_xPos = h_xPos + direction.first*speed;
-    float new_yPos = h_yPos + direction.second*speed;
-    positions.push_back(std::make_pair(new_xPos, new_yPos));
-    h_xPos = new_xPos;
-    h_yPos = new_yPos;
+    while (positions.size() < maxSegCount)
+    {
+        auto direction = getDirection(h_xPos, h_yPos);
+        float new_xPos = h_xPos + direction.first*speed;
+        float new_yPos = h_yPos + direction.second*speed;
+        positions.push_back(std::make_pair(new_xPos, new_yPos));
+        h_xPos = new_xPos;
+        h_yPos = new_yPos;
+    }
+}
+void Worm::print()
+{
+    for (auto v : positions)
+        std::cout << v.first << v.second << "\n";
+
 }

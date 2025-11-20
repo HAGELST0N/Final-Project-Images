@@ -1,19 +1,22 @@
 #include <raylib.h>
 #include <raygui.h>
 #include <cstdint>
+#include <ctime>
+#include <iostream>
 #include "Noise.h"
 #include "image.h"
 #include "Worm.h"
 
 int main()
 {
+
     const int screenWidth = 800;
     const int screenHeight = 450;
     const int imgWidth = 400;
     const int imgHeight = 400;
 
     InitWindow(screenWidth, screenHeight, "Pixel Manipulation");
-
+    srand(time(0));
     SetTargetFPS(1);
 
     Image img = GenImageColor(imgHeight, imgHeight, WHITE);
@@ -22,6 +25,10 @@ int main()
     Texture tex = LoadTextureFromImage(img);
 
     Worm worm;
+    worm.Walk();
+
+    worm.print();
+
     vector<float> initVec = createNoise(imgWidth, imgHeight, 1334);
     vector<int> finalVec = divideNoise(initVec, 0.5);
     vector<int> initImgVec = mapNoise(initVec);

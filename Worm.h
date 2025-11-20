@@ -21,7 +21,7 @@ public:
 private:
     FastNoiseLite noise;
     float h_xPos = 0.01, h_yPos = 0.01, speed = 10.0, length = 10.0;
-    int maxSegCount = 5;
+    int maxSegCount = 50;
 };
 
 

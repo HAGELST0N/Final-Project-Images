@@ -31,16 +31,17 @@ int main()
 
     vector<float> initVec = createNoise(imgWidth, imgHeight, 1334);
     vector<int> finalVec = divideNoise(initVec, 0.5);
-    vector<int> initImgVec = mapNoise(initVec);
+    //vector<int> initImgVec = mapNoise(initVec);
+    vector<int> blackImgVec(imgHeight*imgWidth,0);
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        displayImg(worm, imgWidth, imgHeight, initImgVec, pixels);
+        displayImg(worm, imgWidth, imgHeight, blackImgVec, pixels);
         UpdateTexture(tex, pixels);
 
         // drawing logic goes here
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(PINK);
         DrawTexture(tex, 200, 25, WHITE);
         EndDrawing();
     }

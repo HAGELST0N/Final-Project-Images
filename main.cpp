@@ -19,7 +19,7 @@ int main()
     srand(time(0));
     SetTargetFPS(1);
 
-    Image img = GenImageColor(imgHeight, imgHeight, WHITE);
+    Image img = GenImageColor(imgWidth, imgHeight, WHITE);
     ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     auto pixels = (Color*)img.data;
     Texture tex = LoadTextureFromImage(img);

@@ -21,3 +21,19 @@ void displayImg(Worm worm, const int imgWidth, const int imgHeight, vector<int> 
         }
     }
 }
+
+vector<int> drawWormVec(Worm worm)
+{
+    float minX = 100, maxX = -100, minY = 100, maxY = -100;
+    for (auto v: worm.positions)
+    {
+        if (v.first < minX){minX = v.first;}
+        if (v.first > maxX){maxX = v.first;}
+        if (v.second < minY){minY = v.second;}
+        if (v.second > maxY){maxY = v.second;}
+    }
+    int rangeX = int(abs(maxX-minX))+50;
+    int rangeY = int(abs(maxY-minY))+50;
+    int screenHeight = rangeY+50;
+    int screenWidth = rangeX+200;
+}

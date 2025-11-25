@@ -29,14 +29,21 @@ int main()
 
     worm.print();
 
-    vector<float> initVec = createNoise(imgWidth, imgHeight, 1334);
-    vector<int> finalVec = divideNoise(initVec, 0.5);
+    //float** initVec = createNoise(imgWidth, imgHeight, 1334);
+    //vector<int> finalVec = divideNoise(initVec, 0.5);
     //vector<int> initImgVec = mapNoise(initVec);
     vector<int> blackImgVec(imgHeight*imgWidth,0);
+
+    int blackImgArray[imgWidth][imgHeight];
+    for (int i = 0; i < imgWidth; i++)
+        for (int j = 0; j < imgHeight; j++)
+            blackImgArray[i][j] = 0;
+
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        displayImg(worm, imgWidth, imgHeight, blackImgVec, pixels);
+        displayImg(worm, imgWidth, imgHeight, blackImgArray, pixels);
         UpdateTexture(tex, pixels);
 
         // drawing logic goes here

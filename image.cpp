@@ -7,7 +7,14 @@ void displayImg(Worm worm, const int imgWidth, const int imgHeight, int inputImg
     for (auto v: worm.positions)
     {
         //inputImgVec[int(abs((v.first+100)*(v.second+100)))] = 255;
-        inputImgVec[(int)v.first][(int)v.second] = 255;
+        if (v.first >= 0 && v.second >= 0)
+            inputImgVec[(int)v.first][(int)v.second] = 255;
+        else if (v.first < 0 && v.second >= 0)
+            inputImgVec[(int)(imgWidth + v.first)][(int)v.second] = 255;
+        else if (v.first >= 0 && v.second < 0)
+            inputImgVec[(int)v.first][(int)(imgHeight + v.second)] = 255;
+        else
+            inputImgVec[(int)(imgWidth + v.first)][(int)(imgHeight + v.second)] = 255;
     }
     for(int row = 0; row < imgHeight; row++)
     {

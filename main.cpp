@@ -28,7 +28,7 @@ int main()
     worm.Walk();
 
     worm.print();
-
+    drawWormVec(&worm);
     //float** initVec = createNoise(imgWidth, imgHeight, 1334);
     //vector<int> finalVec = divideNoise(initVec, 0.5);
     //vector<int> initImgVec = mapNoise(initVec);

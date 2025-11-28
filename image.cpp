@@ -1,4 +1,7 @@
 #include "image.h"
+
+#include <iostream>
+
 #include "Noise.h"
 using namespace std;
 
@@ -33,9 +36,9 @@ void displayImg(Worm worm, const int imgWidth, const int imgHeight, int inputImg
     }
 }
 
-vector<int> drawWormVec(const Worm* worm)
+void drawWormVec(const Worm* worm)
 {
-    std::list<std::pair<float, float>> adjustedWormPos;
+    Vector2 adjustedWormPos[worm->positions.size()];
     float minX = 100, maxX = -100, minY = 100, maxY = -100;
     for (auto v: worm->positions)
     {
@@ -44,9 +47,12 @@ vector<int> drawWormVec(const Worm* worm)
         if (v.second < minY){minY = v.second;}
         if (v.second > maxY){maxY = v.second;}
     }
+    std::cout << minX << " " << minY << " " << maxX << " " << maxY;
+    int i=0;
     for (auto v : worm->positions)
     {
-        adjustedWormPos.push_back(std::make_pair(v.first-minX, v.second-minY));
+        adjustedWormPos[i] = {v.first-minX+25, v.second-minY+25};
+        i++;
     }
     int imgWidth = int(abs(maxX-minX))+50;
     int imgHeight = int(abs(maxY-minY))+50;
@@ -66,7 +72,11 @@ vector<int> drawWormVec(const Worm* worm)
         // drawing logic goes here
         BeginDrawing();
         ClearBackground(PINK);
-        DrawTexture(tex, 200, 25, WHITE);
+        for (int j = 0; j < worm -> positions.size()-1; j++)
+        {
+            DrawSplineSegmentLinear(adjustedWormPos[j], adjustedWormPos[j+1], 10.0, WHITE);
+        }
+
         EndDrawing();
     }
 

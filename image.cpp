@@ -38,6 +38,7 @@ void displayImg(Worm worm, const int imgWidth, const int imgHeight, int inputImg
 
 void drawWormVec(const Worm* worm)
 {
+    float thicc = 10.0;
     Vector2 adjustedWormPos[worm->positions.size()];
     float minX = 100, maxX = -100, minY = 100, maxY = -100;
     for (auto v: worm->positions)
@@ -74,7 +75,8 @@ void drawWormVec(const Worm* worm)
         ClearBackground(PINK);
         for (int j = 0; j < worm -> positions.size()-1; j++)
         {
-            DrawSplineSegmentLinear(adjustedWormPos[j], adjustedWormPos[j+1], 10.0, WHITE);
+            DrawSplineSegmentLinear(adjustedWormPos[j], adjustedWormPos[j+1], thicc, WHITE);
+            DrawCircle(adjustedWormPos[j].x, adjustedWormPos[j].y, thicc, WHITE);
         }
 
         EndDrawing();

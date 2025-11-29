@@ -7,6 +7,16 @@
 #include <cmath>
 #include <ctime>
 #include <random>
+#include <algorithm>
+
+//from KungPhoo at https://stackoverflow.com/questions/24139428/check-if-element-is-in-the-list-contains
+namespace std
+{
+    template<class _container,
+        class _Ty> inline
+        bool contains(_container _C, const _Ty& _Val)
+    {return std::find(_C.begin(), _C.end(), _Val) != _C.end(); }
+};
 
 Worm::Worm() {
     srand(time(0));
@@ -16,9 +26,21 @@ Worm::Worm() {
 
 std::pair<float, float> Worm::getDirection(float x, float y) {
     float noiseAmt = noise.GetNoise(x, y);
-    float degrees = (noiseAmt + 1) * 180;
+    float degrees = (noiseAmt + 1) * 35;
+    float highestNoise = 0;
+    std::pair<float, float> where;
     x = cos(degrees);
     y = sin(degrees);
+    for (int aX = -1; aX <= 1; aX++)
+        for (int aY = -1; aY <= 1; aY++) {
+            float tempNoise = noise.GetNoise(x + (float)aX, y + (float)aY);
+            if (aX == 0 && aY == 0)
+                continue;
+            if (tempNoise > highestNoise && !std::contains(positions, std::make_pair(x + aX, y + aY))) {
+                highestNoise = tempNoise;
+                where = std::make_pair(aX, aY);
+            }
+        }
     return std::make_pair(x, y);
 }
 

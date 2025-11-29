@@ -41,20 +41,20 @@ int main()
 
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        displayImg(worm, imgWidth, imgHeight, blackImgArray, pixels);
-        UpdateTexture(tex, pixels);
-
-        // drawing logic goes here
-        BeginDrawing();
-        ClearBackground(PINK);
-        DrawTexture(tex, 200, 25, WHITE);
-        EndDrawing();
-    }
-
-    UnloadTexture(tex);
-
-    CloseWindow();
+    // while (!WindowShouldClose())    // Detect window close button or ESC key
+    // {
+    //     displayImg(worm, imgWidth, imgHeight, blackImgArray, pixels);
+    //     UpdateTexture(tex, pixels);
+    //
+    //     // drawing logic goes here
+    //     BeginDrawing();
+    //     ClearBackground(PINK);
+    //     DrawTexture(tex, 200, 25, WHITE);
+    //     EndDrawing();
+    // }
+    //
+    // UnloadTexture(tex);
+    //
+    // CloseWindow();
     return 0;
 }

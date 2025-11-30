@@ -40,6 +40,7 @@ std::pair<float, float> Worm::getDirection(float x, float y) {
 
 void Worm::Walk()
 {
+    float goalBias = 3;
     //generate a random point for worm to walk towards
     auto goal = getDirection(.01, .01);
     goal.first *=speed * 20;
@@ -54,8 +55,8 @@ void Worm::Walk()
         float yOffset = sin(goalAngle);
 
         auto direction = getDirection(h_xPos, h_yPos);
-        float new_xPos = h_xPos + (direction.first + (xOffset/2)) * speed;
-        float new_yPos = h_yPos + (direction.second + (yOffset/2)) * speed;
+        float new_xPos = h_xPos + (direction.first + (xOffset/goalBias)) * speed;
+        float new_yPos = h_yPos + (direction.second + (yOffset/goalBias)) * speed;
 
         positions.push_back(std::make_pair(new_xPos, new_yPos));
         h_xPos = new_xPos;

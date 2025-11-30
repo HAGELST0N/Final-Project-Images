@@ -15,14 +15,14 @@ int main()
     const int imgWidth = 400;
     const int imgHeight = 400;
 
-    InitWindow(screenWidth, screenHeight, "Pixel Manipulation");
+    //InitWindow(screenWidth, screenHeight, "Pixel Manipulation");
     srand(time(0));
     SetTargetFPS(1);
 
-    Image img = GenImageColor(imgWidth, imgHeight, WHITE);
-    ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
-    auto pixels = (Color*)img.data;
-    Texture tex = LoadTextureFromImage(img);
+    //Image img = GenImageColor(imgWidth, imgHeight, WHITE);
+    //ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+    //auto pixels = (Color*)img.data;
+    //Texture tex = LoadTextureFromImage(img);
 
     Worm worm;
     worm.Walk();

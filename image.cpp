@@ -38,7 +38,9 @@ void displayImg(Worm worm, const int imgWidth, const int imgHeight, int inputImg
 
 void drawWormVec(const Worm* worm)
 {
-    float thicc = 10.0;
+    float scalar = 8.0;
+    float thicc = 1.0*scalar;
+    float spacer = 5.0*scalar;
     Vector2 adjustedWormPos[worm->positions.size()];
     float minX = 100, maxX = -100, minY = 100, maxY = -100;
     for (auto v: worm->positions)
@@ -48,22 +50,24 @@ void drawWormVec(const Worm* worm)
         if (v.second < minY){minY = v.second;}
         if (v.second > maxY){maxY = v.second;}
     }
-    std::cout << minX << " " << minY << " " << maxX << " " << maxY;
+    float rangeX = abs(minX-maxX);
+    float rangeY = abs(minY-maxY);
+    std::cout << rangeX << " " << rangeY;
     int i=0;
     for (auto v : worm->positions)
     {
-        adjustedWormPos[i] = {v.first-minX+25, v.second-minY+25};
+        adjustedWormPos[i] = {(v.first-minX+spacer)*scalar, (v.second-minY+spacer)*scalar};
         i++;
     }
-    int imgWidth = int(abs(maxX-minX))+50;
-    int imgHeight = int(abs(maxY-minY))+50;
-    int screenHeight = imgHeight+50;
-    int screenWidth = imgWidth+200;
+    int imgWidth = int(rangeX+spacer)*scalar;
+    int imgHeight = int(rangeY+spacer)*scalar;
+    int screenHeight = imgHeight*1.1;
+    int screenWidth = imgWidth*1.1;
 
     InitWindow(screenWidth, screenHeight, "Perlin Worm");
-    SetTargetFPS(5);
+    SetTargetFPS(1);
 
-    Image img = GenImageColor(imgWidth, imgHeight, BLACK);
+    Image img = GenImageColor(imgWidth, imgHeight, PINK);
     ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     auto pixels = (Color*)img.data;
     Texture tex = LoadTextureFromImage(img);
@@ -72,11 +76,11 @@ void drawWormVec(const Worm* worm)
     {
         // drawing logic goes here
         BeginDrawing();
-        ClearBackground(PINK);
+        ClearBackground(BLACK);
         for (int j = 0; j < worm -> positions.size()-1; j++)
         {
             DrawSplineSegmentLinear(adjustedWormPos[j], adjustedWormPos[j+1], thicc, WHITE);
-            DrawCircle(adjustedWormPos[j].x, adjustedWormPos[j].y, thicc, WHITE);
+            DrawCircle(adjustedWormPos[j+1].x, adjustedWormPos[j+1].y, thicc/2, WHITE);
         }
 
         EndDrawing();

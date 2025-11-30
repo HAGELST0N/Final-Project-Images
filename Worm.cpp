@@ -27,7 +27,7 @@ Worm::Worm() {
 std::pair<float, float> Worm::getDirection(float x, float y) {
     float noiseAmt = noise.GetNoise(x, y);
     float degrees = (noiseAmt + 1) * 35;
-    float highestNoise = 0;
+    float highestNoise = -2;
     std::pair<float, float> where;
     x = cos(degrees);
     y = sin(degrees);
@@ -41,7 +41,9 @@ std::pair<float, float> Worm::getDirection(float x, float y) {
                 where = std::make_pair(aX, aY);
             }
         }
-    return std::make_pair(x, y);
+    if ( rand() % 5 > 2)
+        return where; //std::make_pair(x, y);
+    return std::make_pair(where.first * -1, where.second);
 }
 
 void Worm::Walk()
@@ -49,8 +51,8 @@ void Worm::Walk()
     while (positions.size() < maxSegCount)
     {
         auto direction = getDirection(h_xPos, h_yPos);
-        float new_xPos = h_xPos + direction.first*speed;
-        float new_yPos = h_yPos + direction.second*speed;
+        float new_xPos = h_xPos + direction.first * ( rand() % (int)speed);
+        float new_yPos = h_yPos + direction.second * ( rand() % (int)speed);
         // for (int i = int(h_xPos); i < abs(int(new_xPos - h_xPos)); i++) {
         //     positions.push_back(std::make_pair(i, (new_yPos - h_yPos) * ((float)i / (new_yPos - h_yPos))/*(new_yPos - h_yPos) / (new_xPos - i) */));
         // }

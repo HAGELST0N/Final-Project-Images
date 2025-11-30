@@ -38,7 +38,7 @@ void displayImg(Worm worm, const int imgWidth, const int imgHeight, int inputImg
 
 void drawWormVec(const Worm* worm)
 {
-    float scalar = 8.0;
+    float scalar = 5.0;
     float thicc = 1.0*scalar;
     float spacer = 5.0*scalar;
     Vector2 adjustedWormPos[worm->positions.size()];

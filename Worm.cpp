@@ -9,6 +9,8 @@
 #include <random>
 #include <algorithm>
 
+#include "raylib.h"
+
 //from KungPhoo at https://stackoverflow.com/questions/24139428/check-if-element-is-in-the-list-contains
 namespace std
 {
@@ -26,58 +28,35 @@ Worm::Worm() {
 
 std::pair<float, float> Worm::getDirection(float x, float y) {
     float noiseAmt = noise.GetNoise(x, y);
-    float degrees = (noiseAmt + 1) * 35;
-    float highestNoise = -2;
+    float degrees = noiseAmt * PI;
     std::pair<float, float> where;
-    x = cos(degrees);
-    y = sin(degrees);
-    for (int aX = -1; aX <= 1; aX++)
-        for (int aY = -1; aY <= 1; aY++) {
-            float tempNoise = noise.GetNoise(x + (float)aX, y + (float)aY);
-            if (aX == 0 && aY == 0)
-                continue;
-            if (tempNoise > highestNoise && !std::contains(positions, std::make_pair(x + aX, y + aY))) {
-                highestNoise = tempNoise;
-                where = std::make_pair(aX, aY);
-            }
-        }
-    if ( rand() % 5 > 2)
-        return where; //std::make_pair(x, y);
-    return std::make_pair(where.first * -1, where.second);
+    float dirX = cos(degrees);
+    float dirY = sin(degrees);
+
+
+
+    return std::make_pair(dirX, dirY);
 }
 
 void Worm::Walk()
 {
+    //generate a random point for worm to walk towards
+    auto goal = getDirection(.01, .01);
+    goal.first *=speed * 20;
+    goal.second *=speed * 20;
     while (positions.size() < maxSegCount)
     {
+        //
+        float xDist = h_xPos-goal.first;
+        float yDist = h_yPos-goal.second;
+        float goalAngle = atan2(xDist, yDist);
+        float xOffset = cos(goalAngle);
+        float yOffset = sin(goalAngle);
+
         auto direction = getDirection(h_xPos, h_yPos);
-        float new_xPos = h_xPos + direction.first * ( rand() % (int)speed);
-        float new_yPos = h_yPos + direction.second * ( rand() % (int)speed);
-        // for (int i = int(h_xPos); i < abs(int(new_xPos - h_xPos)); i++) {
-        //     positions.push_back(std::make_pair(i, (new_yPos - h_yPos) * ((float)i / (new_yPos - h_yPos))/*(new_yPos - h_yPos) / (new_xPos - i) */));
-        // }
-        //push back all values between previous and new positions
-        //adds or subtracts from h_Pos based on if distance is negative or positive
-        if (new_xPos - h_xPos >= 0 && new_yPos - h_yPos >= 0) {
-            for (int i = 1; i < abs(int(new_xPos - h_xPos)); i++) {
-                positions.push_back(std::make_pair(h_xPos + ((new_xPos - h_xPos) * ((float)i / (new_xPos - h_xPos))), h_yPos + ((new_yPos - h_yPos) * ((float)i / (new_yPos - h_yPos)))));
-            }
-        }
-        else if (new_xPos - h_xPos < 0 && new_yPos - h_yPos >= 0) {
-            for (int i = 1; i < abs(int(new_xPos - h_xPos)); i++) {
-                positions.push_back(std::make_pair(h_xPos - ((new_xPos - h_xPos) * ((float)i / (new_xPos - h_xPos))), h_yPos + ((new_yPos - h_yPos) * ((float)i / (new_yPos - h_yPos)))));
-            }
-        }
-        else if (new_xPos - h_xPos >= 0 && new_yPos - h_yPos < 0) {
-            for (int i = 1; i < abs(int(new_xPos - h_xPos)); i++) {
-                positions.push_back(std::make_pair(h_xPos + ((new_xPos - h_xPos) * ((float)i / (new_xPos - h_xPos))), h_yPos - ((new_yPos - h_yPos) * ((float)i / (new_yPos - h_yPos)))));
-            }
-        }
-        else {
-            for (int i = 1; i < abs(int(new_xPos - h_xPos)); i++) {
-                positions.push_back(std::make_pair(h_xPos - ((new_xPos - h_xPos) * ((float)i / (new_xPos - h_xPos))), h_yPos - ((new_yPos - h_yPos) * ((float)i / (new_yPos - h_yPos)))));
-            }
-        }
+        float new_xPos = h_xPos + (direction.first + (xOffset/2)) * speed;
+        float new_yPos = h_yPos + (direction.second + (yOffset/2)) * speed;
+
         positions.push_back(std::make_pair(new_xPos, new_yPos));
         h_xPos = new_xPos;
         h_yPos = new_yPos;

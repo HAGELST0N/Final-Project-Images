@@ -43,8 +43,8 @@ void Worm::Walk()
     float goalBias = 3;
     //generate a random point for worm to walk towards
     auto goal = getDirection(.01, .01);
-    goal.first *=speed * 20;
-    goal.second *=speed * 20;
+    goal.first *=speed * maxSegCount/2;
+    goal.second *=speed * maxSegCount/2;
     while (positions.size() < maxSegCount)
     {
         //

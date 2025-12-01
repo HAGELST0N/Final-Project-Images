@@ -34,19 +34,19 @@ vector<float> createNoise(const int x_size, const int y_size, const int seed){
     return noiseData;
 }
 
-vector<int> divideNoise(const vector<float> inputVec, const float divideLine) {
+vector<int> divideNoise(const vector<float> inputVec, const float divideThresh) {
     vector<int> outputVec(inputVec.size());
     for (int i = 0; i < inputVec.size(); i++) {
-        outputVec[i] = ourRound(inputVec[i], divideLine);
+        outputVec[i] = ourRound(inputVec[i], divideThresh);
     }
     return outputVec;
 }
 
 int ourRound(float value, float divideLine) {
-    if (value >= divideLine)
-        return 255;
-    else
+    if (value >= divideLine || value<= -divideLine)
         return 0;
+    else
+        return 255;
 }
 // Scales noise values from a float -1 to 1 into an integer 0-255
 vector<int> mapNoise(const vector<float> &inputVec)

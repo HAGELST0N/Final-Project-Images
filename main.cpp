@@ -29,32 +29,31 @@ int main()
 
     worm.print();
     drawWormVec(&worm);
-    //float** initVec = createNoise(imgWidth, imgHeight, 1334);
-    //vector<int> finalVec = divideNoise(initVec, 0.5);
-    //vector<int> initImgVec = mapNoise(initVec);
-    vector<int> blackImgVec(imgHeight*imgWidth,0);
+    InitWindow(screenWidth, screenHeight, "Alternate Worm");
 
-    int blackImgArray[imgWidth][imgHeight];
-    for (int i = 0; i < imgWidth; i++)
-        for (int j = 0; j < imgHeight; j++)
-            blackImgArray[i][j] = 0;
+    SetTargetFPS(1);
 
+    Image img = GenImageColor(imgHeight, imgHeight, WHITE);
+    ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+    auto pixels = (Color*)img.data;
+    Texture tex = LoadTextureFromImage(img);
 
+    vector<float> initVec = createNoise(imgWidth, imgHeight, rand());
+    vector<int> finalVec = divideNoise(initVec, 0.1);
     // Main game loop
-    // while (!WindowShouldClose())    // Detect window close button or ESC key
-    // {
-    //     displayImg(worm, imgWidth, imgHeight, blackImgArray, pixels);
-    //     UpdateTexture(tex, pixels);
-    //
-    //     // drawing logic goes here
-    //     BeginDrawing();
-    //     ClearBackground(PINK);
-    //     DrawTexture(tex, 200, 25, WHITE);
-    //     EndDrawing();
-    // }
-    //
-    // UnloadTexture(tex);
-    //
-    // CloseWindow();
-    return 0;
+    while (!WindowShouldClose())    // Detect window close button or ESC key
+    {
+        displayImg(imgWidth, imgHeight, finalVec, pixels);
+        UpdateTexture(tex, pixels);
+
+        // drawing logic goes here
+        BeginDrawing();
+        ClearBackground(BLACK);
+        DrawTexture(tex, 200, 25, WHITE);
+        EndDrawing();
+    }
+
+    UnloadTexture(tex);
+
+    CloseWindow();
 }
